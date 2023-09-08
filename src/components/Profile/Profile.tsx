@@ -4,7 +4,7 @@ import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 import {ProfileContainerType} from "../../components/Profile/ProfileContainer";
 
 type ProfilePropsType ={
-    profile: ProfileContainerType
+    profile: ProfileContainerType | null
     status: string
     updateStatus: (status:string)=>void
 }

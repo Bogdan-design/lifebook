@@ -5,7 +5,7 @@ import {ProfileContainerType} from "../ProfileContainer";
 import {ProfileStatus} from "./ProfileStatus";
 
 type ProfileInfoPropsType = {
-    profile: ProfileContainerType
+    profile: ProfileContainerType | null
     status:string
     updateStatus: (status:string)=>void
 }

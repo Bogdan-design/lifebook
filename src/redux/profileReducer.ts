@@ -1,5 +1,6 @@
 import {AppThunk} from "./redaxStore";
 import {profileAPI, usersAPI} from "../api/api";
+import {ProfileContainerType} from "../components/Profile/ProfileContainer";
 
 export type PostsType = {
     id: number
@@ -9,13 +10,11 @@ export type PostsType = {
 
 export type InitialStateType = {
     posts: Array<PostsType>
-    newPostText: string
-    profile: null | string
+    profile: ProfileContainerType | null
     status: string
 }
 
 const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_STATUS = 'SET-STATUS'
 
@@ -24,7 +23,6 @@ const initialState: InitialStateType = {
         {id: 1, message: "Hi, how a you?", likesCount: 12},
         {id: 2, message: "It's my first post", likesCount: 11},
     ],
-    newPostText: 'Write her',
     profile: null,
     status:''
 }
@@ -36,13 +34,11 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
         case ADD_POST:
             const newPost: PostsType = {
                 id: 5,
-                message: state.newPostText,
+                message: action.newPost,
                 likesCount: 11
             }
-            return {...state, posts: [...state.posts, newPost], newPostText: ''}
-        case UPDATE_NEW_POST_TEXT: {
-            return {...state, newPostText: action.newText}
-        }
+            return {...state, posts: [...state.posts, newPost]}
+
         case SET_USER_PROFILE: {
             return {...state, profile: action.profile}
         }
@@ -55,26 +51,19 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
 }
 
 export type ProfileReducerACtype = ReturnType<typeof addPostAC>
-    | ReturnType<typeof updateNewPostTextAC>
     | ReturnType<typeof setUserProfile>
 | ReturnType<typeof setStatus>
 
 export const addPostAC = (newPost: string) => {
     return {
         type: ADD_POST,
-        newPost: newPost
+        newPost
     } as const
 }
-const setUserProfile = (profile: string) => {
+const setUserProfile = (profile: ProfileContainerType) => {
     return {
         type: SET_USER_PROFILE,
         profile
-    } as const
-}
-export const updateNewPostTextAC = (newText: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: newText
     } as const
 }
 export const setStatus = (status: string) => {

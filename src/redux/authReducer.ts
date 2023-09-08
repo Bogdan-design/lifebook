@@ -19,7 +19,7 @@ const initialState: InitialStateType = {
 }
 
 
-export const authReducer = (state: InitialStateType = initialState, action: UsersReducerACtype): InitialStateType => {
+export const authReducer = (state: InitialStateType = initialState, action: UsersReducerACType): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
@@ -33,7 +33,7 @@ export const authReducer = (state: InitialStateType = initialState, action: User
     }
 }
 
-export type UsersReducerACtype = ReturnType<typeof setAuthUserData>
+export type UsersReducerACType = ReturnType<typeof setAuthUserData>
 
 
 export const setAuthUserData = (userId: number  | null,

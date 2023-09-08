@@ -13,7 +13,7 @@ type MapStatePropsType = InitialStateType
 
 type MapDispatchPropsType = {
     updateNewPostText:(text:string)=> void
-    addPost:()=>void
+    addPost:(newPost:string)=>void
 
 }
 
@@ -21,7 +21,9 @@ const mapStateToProps = (state: AppStateType):MapStatePropsType => {
     return{
         posts:state.profilePage.posts,
         newPostText:state.profilePage.newPostText,
-        profile:state.profilePage.profile
+        profile:state.profilePage.profile,
+        status:state.profilePage.status
+
     }
 }
 
@@ -30,8 +32,8 @@ const mapDispatchToProps = (dispatch:Dispatch):MapDispatchPropsType => {
         updateNewPostText: (text:string)=> {
             dispatch(updateNewPostTextAC(text))
         },
-        addPost:()=>{
-            dispatch(addPostAC(''))
+        addPost:(newPost:string)=>{
+            dispatch(addPostAC(newPost))
         }
 
     }

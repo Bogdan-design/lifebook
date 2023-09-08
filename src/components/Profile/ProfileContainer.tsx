@@ -4,8 +4,8 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redaxStore";
 import {getStatus, getUserProfile, updateStatus} from "../../redux/profileReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 type ContactsType = {
@@ -41,7 +41,7 @@ type MapDispatchPropsType = {
     updateStatus: (status: string) => void
 }
 type MapStatePropsType = {
-    profile: null | string,
+    profile: ProfileContainerType | null,
     status: string
 }
 type OwnPropsType = MapDispatchPropsType & MapStatePropsType
@@ -77,7 +77,8 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 
 })
 
-export default compose(
+export default compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
     withRouter,
+    withAuthRedirect
 )(ProfileContainer)
