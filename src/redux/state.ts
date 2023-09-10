@@ -1,6 +1,7 @@
 import {sidebarReducer} from "./sidebarReducer";
 import {dialogsReducer} from "./dialogsReducer";
 import {profileReducer} from "./profileReducer";
+import {ProfileContainerType} from "../components/Profile/ProfileContainer";
 
 export type StoreType = {
     _state: RooteStateType
@@ -24,13 +25,12 @@ type MessagesType = {
 }
 type ProfilePageType = {
     posts: Array<PostsType>
-    newPostText: string
-    profile: null | string
+    status: string
+    profile: null | ProfileContainerType
 }
 type DialogsPageType = {
     dialogs: Array<DialogsType>
     messages: Array<MessagesType>
-    newMessageText: string
 }
 type SidebarType = {}
 export type RooteStateType = {
@@ -47,7 +47,7 @@ export const store: StoreType = {
                 {id: 1, message: "Hi, how a you?", likesCount: 12},
                 {id: 2, message: "It's my first post", likesCount: 11},
             ],
-            newPostText: 'Write her',
+            status:'',
             profile: null
         },
         dialogsPage: {
@@ -66,9 +66,6 @@ export const store: StoreType = {
                 {id: 4, message: "Yo"},
                 {id: 5, message: "Yo"},
             ],
-            newMessageText: ''
-
-
         },
         sidebar: {},
     },

@@ -1,12 +1,27 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Input} from "../../components/common/FormsControls/FormsControls";
+import {Element} from "../../components/common/FormsControls/FormsControls";
 import {maxLengthCreator, required} from "../../utils/validators/validators";
+import {connect} from "react-redux";
+import {loginTC} from "../../redux/authReducer";
+import {LoginType} from "../../api/api";
+import {AppStateType} from "../../redux/redaxStore";
+import {Redirect} from "react-router-dom";
 
-export const Login = () => {
+type LoginPropsType = {
+    loginTC: (data: LoginType) => void
+    isAuth: boolean
+}
 
-    const onSubmit = (formData:FormDataType) =>{
+const Login = (props: LoginPropsType) => {
+
+    const onSubmit = (formData: LoginType) => {
+        props.loginTC(formData)
         console.log(formData)
+    }
+
+    if (props.isAuth) {
+      return  <Redirect to={'/profile'}/>
     }
 
     return (
@@ -19,26 +34,22 @@ export const Login = () => {
     );
 };
 
-type FormDataType= {
-    login: string
-    password: string
-    rememberMe:boolean
 
-}
+const maxLength = maxLengthCreator(20)
 
-const maxLength = maxLengthCreator(10)
-
-export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+export const LoginForm: React.FC<InjectedFormProps<LoginType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field placeholder={'Login'} name={'login'} component={Input} validate={[required,maxLength]}/>
+                <Field as='input' placeholder={'Email'} name={'email'} component={Element}
+                       validate={[required, maxLength]}/>
             </div>
             <div>
-                <Field placeholder={'Password'} name={'password'} component={Input} validate={[required,maxLength]}/>
+                <Field as='input' placeholder={'Password'} name={'password'} type={'password'} component={Element}
+                       validate={[required, maxLength]}/>
             </div>
             <div>
-                <Field type={"checkbox"} name={'rememberMe'} component={Input}/> remember me
+                <Field as='input' type={"checkbox"} text={'remember me'} name={'rememberMe'} component={Element}/>
             </div>
             <div>
                 <button type={'submit'}>Login</button>
@@ -47,6 +58,15 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     );
 };
 
-const LoginReduxForm = reduxForm<FormDataType>({
-    form:'login'
-}) (LoginForm)
+const LoginReduxForm = reduxForm<LoginType>({
+    form: 'login'
+})(LoginForm)
+
+let mapStateToProps = (state: AppStateType) => ({
+    isAuth: state.auth.isAuth
+})
+
+
+export default connect(mapStateToProps, {loginTC})(Login)
+
+

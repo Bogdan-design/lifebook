@@ -1,4 +1,5 @@
 import axios from "axios";
+import {InitialStateType} from "../redux/authReducer";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -31,17 +32,27 @@ export const profileAPI = {
         return instance.get(`profile/${userId}`)
         // .then(res=>res.data)
     },
-    getStatus(userId:number){
+    getStatus(userId: number) {
         return instance.get<string>(`profile/status/${userId}`)
     },
-    updateStatus(status:string){
-        return instance.put<FollowResponseType>(`profile/status`,{status})
+    updateStatus(status: string) {
+        return instance.put<FollowResponseType>(`profile/status`, {status})
     }
 }
 
 export const authAPI = {
     me() {
-        return instance.get<FollowResponseType>(`auth/me`)
+        return instance.get<FollowResponseType<InitialStateType>>(`auth/me`)
+    },
+    login({password, rememberMe = false, email}: LoginType) {
+        return instance.post<FollowResponseType<{ userId: number }>>('auth/login', {
+            password,
+            rememberMe,
+            email
+        })
+    },
+    logOut() {
+        return instance.delete<FollowResponseType>('auth/login')
     }
 }
 
@@ -67,5 +78,11 @@ type FollowResponseType<D = {}> = {
     resultCode: number
     messages: string [],
     data: D
+}
+
+export type LoginType = {
+    email: string
+    password: string
+    rememberMe?: boolean
 }
 

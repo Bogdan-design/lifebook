@@ -1,5 +1,5 @@
 import {AppThunk} from "./redaxStore";
-import {authAPI} from "../api/api";
+import {authAPI, LoginType} from "../api/api";
 
 const SET_USER_DATA = 'SET-USER-DATA'
 
@@ -15,7 +15,7 @@ const initialState: InitialStateType = {
     userId: null,
     email: 'blabla@bla.bla',
     login: 'samurai',
-    isAuth:false
+    isAuth: false
 }
 
 
@@ -24,8 +24,7 @@ export const authReducer = (state: InitialStateType = initialState, action: User
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.data,
-                isAuth:true
+                ...action.payload
             }
 
         default :
@@ -36,25 +35,45 @@ export const authReducer = (state: InitialStateType = initialState, action: User
 export type UsersReducerACType = ReturnType<typeof setAuthUserData>
 
 
-export const setAuthUserData = (userId: number  | null,
+export const setAuthUserData = (userId: number | null,
                                 email: string | null,
-                                login: string | null) => {
+                                login: string | null,
+                                isAuth: boolean) => {
     return {
         type: SET_USER_DATA,
-        data: {
+        payload: {
             userId,
             email,
-            login
+            login,
+            isAuth
         }
     } as const
 }
 
-export const getAuthUserData = () : AppThunk =>(dispatch)=>{
+export const getAuthUserData = (): AppThunk => (dispatch) => {
     authAPI.me()
         .then(res => {
             if (res.data.resultCode === 0) {
-                let {id, email, login} = res.data.data
-                dispatch(setAuthUserData(id, email, login))
+                let {userId, email, login} = res.data.data
+                dispatch(setAuthUserData(userId, email, login,true))
+            }
+        })
+}
+
+export const loginTC = (data: LoginType): AppThunk => (dispatch) => {
+    authAPI.login(data)
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(getAuthUserData())
+            }
+        })
+}
+
+export const logOutTC = (): AppThunk => (dispatch) => {
+    authAPI.logOut()
+        .then(res => {
+            if (res.data.resultCode === 0) {
+                dispatch(setAuthUserData(null, null, null,false))
             }
         })
 }

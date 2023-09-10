@@ -1,37 +1,24 @@
-import {ComponentPropsWithoutRef} from "react";
+import {ComponentPropsWithoutRef, ElementType,} from "react";
 import s from './FormsControls.module.css'
 
 
-type Props = {
-    typeField:HTMLInputElement
-    input?: HTMLInputElement['type'],
+type Props<T extends ElementType = 'input'> = {
+    as:T
+    input: HTMLInputElement,
     meta: {error:string,touched:boolean}
-} & ComponentPropsWithoutRef<'textarea'> & ComponentPropsWithoutRef<'input'>
+    text?:string
+} & ComponentPropsWithoutRef<T>
 
-export const Textarea = ({input, meta,typeField, ...rest}: Props) => {
+export const Element = <T extends ElementType = 'input'>({input, meta,as:Component = 'input', ...rest}: Props<T>) => {
     const showError = meta.error && meta.touched
     return (
         <div className={s.formControl + ' ' + (showError ? s.error : '')}>
             <div>
-                <textarea type={typeField} {...input} {...rest}/>
+                <Component {...input} {...rest}/>
+                <span>{rest.text}</span>
             </div>
             {showError
                 && <span>{meta.error}</span> }
-
-        </div>
-    )
-}
-
-export const Input = ({input, meta, ...rest}: Props) => {
-    const showError = meta.error && meta.touched
-    return (
-        <div className={s.formControl + ' ' + (showError ? s.error : '')}>
-            <div>
-                <input {...input} {...rest}/>
-            </div>
-            {showError
-                && <span>{meta.error}</span> }
-
         </div>
     )
 }

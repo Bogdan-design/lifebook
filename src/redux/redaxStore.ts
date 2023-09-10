@@ -22,7 +22,7 @@ export const store = createStore(reducers,applyMiddleware(thunk))
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AnyAction>
 
 // export const useAppDispatch =  () => useDispatch<AppDispatch>()
-
+//
 // export type AppDispatch = ThunkDispatch<AppStateType, unknown, AnyAction>
 // types
 export type AppStateType =ReturnType<typeof reducers>
