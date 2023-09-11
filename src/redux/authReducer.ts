@@ -1,5 +1,6 @@
 import {AppThunk} from "./redaxStore";
 import {authAPI, LoginType} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'SET-USER-DATA'
 
@@ -61,10 +62,15 @@ export const getAuthUserData = (): AppThunk => (dispatch) => {
 }
 
 export const loginTC = (data: LoginType): AppThunk => (dispatch) => {
+
+
     authAPI.login(data)
         .then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(getAuthUserData())
+            } else {
+                const message = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
+                dispatch(stopSubmit('login',{_error:message}))
             }
         })
 }

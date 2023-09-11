@@ -7,6 +7,7 @@ import {loginTC} from "../../redux/authReducer";
 import {LoginType} from "../../api/api";
 import {AppStateType} from "../../redux/redaxStore";
 import {Redirect} from "react-router-dom";
+import s from '../common/FormsControls/FormsControls.module.css'
 
 type LoginPropsType = {
     loginTC: (data: LoginType) => void
@@ -17,7 +18,6 @@ const Login = (props: LoginPropsType) => {
 
     const onSubmit = (formData: LoginType) => {
         props.loginTC(formData)
-        console.log(formData)
     }
 
     if (props.isAuth) {
@@ -51,6 +51,7 @@ export const LoginForm: React.FC<InjectedFormProps<LoginType>> = (props) => {
             <div>
                 <Field as='input' type={"checkbox"} text={'remember me'} name={'rememberMe'} component={Element}/>
             </div>
+            {props.error && <div className={s.formSummeryError}>{props.error}</div>}
             <div>
                 <button type={'submit'}>Login</button>
             </div>
