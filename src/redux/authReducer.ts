@@ -52,11 +52,11 @@ export const setAuthUserData = (userId: number | null,
 }
 
 export const getAuthUserData = (): AppThunk => (dispatch) => {
-    authAPI.me()
+    return authAPI.me()
         .then(res => {
             if (res.data.resultCode === 0) {
                 let {userId, email, login} = res.data.data
-                dispatch(setAuthUserData(userId, email, login,true))
+                dispatch(setAuthUserData(userId, email, login, true))
             }
         })
 }
@@ -70,7 +70,7 @@ export const loginTC = (data: LoginType): AppThunk => (dispatch) => {
                 dispatch(getAuthUserData())
             } else {
                 const message = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
-                dispatch(stopSubmit('login',{_error:message}))
+                dispatch(stopSubmit('login', {_error: message}))
             }
         })
 }
@@ -79,7 +79,7 @@ export const logOutTC = (): AppThunk => (dispatch) => {
     authAPI.logOut()
         .then(res => {
             if (res.data.resultCode === 0) {
-                dispatch(setAuthUserData(null, null, null,false))
+                dispatch(setAuthUserData(null, null, null, false))
             }
         })
 }

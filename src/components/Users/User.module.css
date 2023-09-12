@@ -7,5 +7,6 @@
 .selectedPage{
     font-weight: bold;
     font-size: 23px;
+    cursor: pointer;
 
 }

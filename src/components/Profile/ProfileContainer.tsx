@@ -29,7 +29,7 @@ export type ProfileContainerType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string,
     fullName: string
-    userId: number
+    userId: number | null
     photos: PhotosType
 }
 type PathParamsType = {
@@ -44,7 +44,6 @@ type MapStatePropsType = {
     profile: ProfileContainerType | null,
     status: string
     authorizedUserId: number | null
-    isAuth: boolean
 }
 type OwnPropsType = MapDispatchPropsType & MapStatePropsType
 type PropsType = RouteComponentProps<PathParamsType> & OwnPropsType
@@ -54,13 +53,17 @@ class ProfileContainer extends React.Component<PropsType, OwnPropsType> {
 
 
     componentDidMount() {
-        let userId = 1049
-        if (this.props.authorizedUserId) {
+        let userId = Number(this.props.match.params.userId)
+        if (!userId && this.props.authorizedUserId ) {
             userId = this.props.authorizedUserId
+            if(!userId){
+                this.props.history.push('/login')
+            }
         }
         this.props.getUserProfile(userId)
 
         this.props.getStatus(userId)
+
 
     }
 
@@ -77,11 +80,11 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
     authorizedUserId: state.auth.userId,
-    isAuth: state.auth.isAuth
 
 })
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
+    withAuthRedirect,
     withRouter,
 )(ProfileContainer)
