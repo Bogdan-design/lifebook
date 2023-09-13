@@ -29,7 +29,7 @@ export const usersAPI = {
 }
 export const profileAPI = {
     getProfile(userId: number) {
-        return instance.get(`profile/${userId}`)
+        return instance.put(`profile/${userId}`)
         // .then(res=>res.data)
     },
     getStatus(userId: number) {

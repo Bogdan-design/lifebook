@@ -3,6 +3,7 @@ import s from "./ProfileInfo.module.css"
 import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileContainerType} from "../ProfileContainer";
 import {ProfileStatus} from "./ProfileStatus";
+import {ProfileStatusWithHooks} from "../../../components/Profile/ProfileInfo/ProfileStatusWithHooks";
 
 type ProfileInfoPropsType = {
     profile: ProfileContainerType | null
@@ -12,7 +13,7 @@ type ProfileInfoPropsType = {
 
 
 export const ProfileInfo = (props: ProfileInfoPropsType) => {
-
+    console.log(props)
     if (!props.profile) {
         return <Preloader/>
     }
@@ -24,7 +25,7 @@ export const ProfileInfo = (props: ProfileInfoPropsType) => {
             {/*</div>*/}
             <div className={s.descriptionBlock}>
                 <img src={props.profile.photos.large}/>
-                <ProfileStatus status={'Hello my friends'} updateStatus={props.updateStatus}/>
+                <ProfileStatusWithHooks status={'Hello my friends'} updateStatus={props.updateStatus}/>
                 <div>
                     {props.profile.aboutMe}
                 </div>

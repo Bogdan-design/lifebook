@@ -12,13 +12,12 @@ type MyPostsPropsType = {
 
 }
 
-export const MyPosts = (props: MyPostsPropsType) => {
+export const  MyPosts= React.memo((props: MyPostsPropsType) =>{
 
-
-    const postsElements = props.posts.map((p,index) =>
+    const postsElements = props.posts.map((p, index) =>
         <Post key={index} message={p.message} likesCount={p.likesCount}/>)
 
-    const onAddPost = (value:PostFormType) => {
+    const onAddPost = (value: PostFormType) => {
         props.addPost(value.post)
     }
 
@@ -33,7 +32,7 @@ export const MyPosts = (props: MyPostsPropsType) => {
             </div>
         </div>
     )
-}
+})
 
 type PostFormType = {
     post:string

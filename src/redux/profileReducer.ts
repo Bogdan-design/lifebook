@@ -24,7 +24,7 @@ const initialState: InitialStateType = {
         {id: 2, message: "It's my first post", likesCount: 11},
     ],
     profile: null,
-    status:''
+    status:'Yo'
 }
 
 
