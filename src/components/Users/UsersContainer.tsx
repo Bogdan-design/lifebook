@@ -21,7 +21,6 @@ import {
     getTotalUsersCount,
     getUsers
 } from "../../redux/usersSelectors";
-import {stat} from "fs";
 
 type MapStatePropsType = InitialStateType
 type UsersAPIComponentPropsType = {
@@ -44,11 +43,13 @@ type UsersAPIComponentPropsType = {
 
 class UsersContainer extends React.Component<UsersAPIComponentPropsType, InitialStateType> {
     componentDidMount() {
-        this.props.requestUsers(this.props.currentPage, this.props.pageSize)
+        const {currentPage,pageSize,requestUsers} = this.props
+        requestUsers(currentPage,pageSize)
     }
 
     onPageChanged = (pageNumber: number) => {
-        this.props.requestUsers(pageNumber, this.props.pageSize)
+        const {pageSize,requestUsers} = this.props
+        requestUsers(pageNumber,pageSize)
     }
 
     render() {
@@ -67,18 +68,6 @@ class UsersContainer extends React.Component<UsersAPIComponentPropsType, Initial
         </>
     }
 }
-
-
-// const mapStateToProps = (state: AppStateType): MapStatePropsType => {
-//     return {
-//         users: state.usersPage.users,
-//         pageSize: state.usersPage.pageSize,
-//         totalUsersCount: state.usersPage.totalUsersCount,
-//         currentPage: state.usersPage.currentPage,
-//         isFetching: state.usersPage.isFetching,
-//         followingInProgress: state.usersPage.followingInProgress
-//     }
-// }
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {

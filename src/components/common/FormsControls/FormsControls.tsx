@@ -1,4 +1,4 @@
-import {ComponentPropsWithoutRef, ElementType,} from "react";
+import React, {ComponentPropsWithoutRef, ElementType,} from "react";
 import s from './FormsControls.module.css'
 
 
@@ -9,16 +9,17 @@ type Props<T extends ElementType = 'input'> = {
     text?:string
 } & ComponentPropsWithoutRef<T>
 
-export const Element = <T extends ElementType = 'input'>({input, meta,as:Component = 'input', ...rest}: Props<T>) => {
-    const showError = meta.error && meta.touched
+export const Element = <T extends ElementType = 'input'>({input, meta:{error,touched},as:Component = 'input',text, ...rest}: Props<T>) => {
+    const showError = error && touched
     return (
         <div className={s.formControl + ' ' + (showError ? s.error : '')}>
             <div>
                 <Component {...input} {...rest}/>
-                <span>{rest.text}</span>
+                <span>{text}</span>
             </div>
             {showError
-                && <span>{meta.error}</span> }
+                && <span>{error}</span> }
         </div>
     )
 }
+

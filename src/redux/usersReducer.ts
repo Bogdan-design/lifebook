@@ -1,5 +1,7 @@
 import {usersAPI, UsersFromServerType} from "../api/api";
 import {AppThunk} from "./redaxStore";
+import {Dispatch} from "redux";
+import {updateObjectInArray} from "../utils/odjectsHelper";
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -23,16 +25,18 @@ export const usersReducer = (state: InitialStateType = initialState, action: Use
         case FOLLOW:
             return {
                 ...state,
-                users: state.users.map(el => el.id === action.payload.id
-                    ? {...el, followed: false}
-                    : el)
+               ussers: updateObjectInArray(state.users,action.payload.id,'id', {followed: false})
+                // users: state.users.map(el => el.id === action.payload.id
+                //     ? {...el, followed: false}
+                //     : el)
             }
         case UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map(el => el.id === action.payload.id
-                    ? {...el, followed: true}
-                    : el)
+                ussers: updateObjectInArray(state.users,action.payload.id,'id', {followed: true})
+                // users: state.users.map(el => el.id === action.payload.id
+                //     ? {...el, followed: true}
+                //     : el)
             }
         case SET_USERS:
             return {
@@ -118,39 +122,32 @@ export const toggleFollowingInProgress = (id: number, isFetching: boolean) => {
 
 // thunks
 
-export const requestUsers = (page: number, pageSize: number): AppThunk => (dispatch) => {
+export const requestUsers = (page: number, pageSize: number): AppThunk => async (dispatch) => {
     dispatch(toggleIsFetching(true))
     dispatch(setCurrentPage(page))
-    usersAPI.getUsers(page, pageSize)
-        .then(res => {
+  const res = await  usersAPI.getUsers(page, pageSize)
             dispatch(toggleIsFetching(false))
             dispatch(setUsers(res.items))
             dispatch(setTotalUsersCount(res.totalCount))
-        })
 }
 
-export const follow = (id: number): AppThunk => (dispatch) => {
+
+const followUnfollow =async (dispatch:Dispatch,id:number,apiMethod:any,actionCreator:any)=>{
     dispatch(toggleFollowingInProgress(id, true))
-    usersAPI.followAPI(id)
-        .then(res => {
-            if (res.resultCode === 0) {
-                dispatch(toggleIsFetching(false))
-                dispatch(unfollowSuccess(id))
-            }
-            dispatch(toggleFollowingInProgress(id, false))
-        })
+    const res = await apiMethod(id)
+    if (res.resultCode === 0) {
+        dispatch(toggleIsFetching(false))
+        dispatch(actionCreator(id))
+    }
+    dispatch(toggleFollowingInProgress(id, false))
 }
 
-export const unfollow = (id: number): AppThunk => (dispatch) => {
-    dispatch(toggleFollowingInProgress(id, true))
-    usersAPI.unfollowAPI(id)
-        .then(res => {
-            if (res.resultCode === 0) {
-                dispatch(toggleIsFetching(false))
-                dispatch(followSuccess(id))
-            }
-            dispatch(toggleFollowingInProgress(id, false))
-        })
+export const follow = (id: number): AppThunk => async (dispatch) => {
+    followUnfollow(dispatch,id,usersAPI.followAPI.bind(id),unfollowSuccess)
+}
+
+export const unfollow = (id: number): AppThunk => async (dispatch) => {
+    followUnfollow(dispatch,id,usersAPI.unfollowAPI.bind(id),followSuccess)
 }
 
 
@@ -176,6 +173,10 @@ type LocationType = {
     city: string
     country: string
 }
+
+type ActionCreatorType = | ReturnType<typeof followSuccess>
+    | ReturnType<typeof unfollowSuccess>
+
 export type UsersReducerACtype =
     | ReturnType<typeof followSuccess>
     | ReturnType<typeof unfollowSuccess>

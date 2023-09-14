@@ -37,9 +37,9 @@ const Login = (props: LoginPropsType) => {
 
 const maxLength = maxLengthCreator(20)
 
-export const LoginForm: React.FC<InjectedFormProps<LoginType>> = (props) => {
+export const LoginForm: React.FC<InjectedFormProps<LoginType>> = ({handleSubmit,error}) => {
     return (
-        <form onSubmit={props.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             <div>
                 <Field as='input' placeholder={'Email'} name={'email'} component={Element}
                        validate={[required, maxLength]}/>
@@ -51,7 +51,7 @@ export const LoginForm: React.FC<InjectedFormProps<LoginType>> = (props) => {
             <div>
                 <Field as='input' type={"checkbox"} text={'remember me'} name={'rememberMe'} component={Element}/>
             </div>
-            {props.error && <div className={s.formSummeryError}>{props.error}</div>}
+            {error && <div className={s.formSummeryError}>{error}</div>}
             <div>
                 <button type={'submit'}>Login</button>
             </div>

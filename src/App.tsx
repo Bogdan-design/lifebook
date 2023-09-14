@@ -1,17 +1,17 @@
 import React from 'react';
 import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
-import {Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Route, withRouter} from "react-router-dom";
 import {Sidebar} from "./components/Sidebar/Sidebar";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
-import {connect} from "react-redux";
+import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeTC} from "../src/redux/appReducer";
-import {AppStateType} from "../src/redux/redaxStore";
+import {AppStateType, store} from "../src/redux/redaxStore";
 import {Preloader} from "./components/common/Preloader/Preloader";
 
 type AppPropsType = {
@@ -28,7 +28,7 @@ export class App extends React.Component<AppPropsType & MapStateToPropsType, App
     }
 
     render() {
-        if (!this.props.isInitialized){
+        if (!this.props.isInitialized) {
             return <Preloader/>
         }
         return (
@@ -54,8 +54,18 @@ export class App extends React.Component<AppPropsType & MapStateToPropsType, App
 }
 
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
-   isInitialized: state.app.isInitialized
+    isInitialized: state.app.isInitialized
 })
 
 
-export default compose<React.ComponentType>(connect(mapStateToProps, {initializeTC}), withRouter)(App)
+const AppContainer = compose<React.ComponentType>(connect(mapStateToProps, {initializeTC}), withRouter)(App)
+
+const MainApp = (props: any) => {
+    return <BrowserRouter>
+        <Provider store={store}>
+            <AppContainer/>
+        </Provider>
+    </BrowserRouter>
+}
+
+export default MainApp

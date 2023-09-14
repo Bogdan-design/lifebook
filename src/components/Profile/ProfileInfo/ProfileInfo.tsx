@@ -2,32 +2,26 @@ import React from "react";
 import s from "./ProfileInfo.module.css"
 import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileContainerType} from "../ProfileContainer";
-import {ProfileStatus} from "./ProfileStatus";
 import {ProfileStatusWithHooks} from "../../../components/Profile/ProfileInfo/ProfileStatusWithHooks";
 
 type ProfileInfoPropsType = {
     profile: ProfileContainerType | null
-    status:string
-    updateStatus: (status:string)=>void
+    status: string
+    updateStatus: (status: string) => void
 }
 
 
-export const ProfileInfo = (props: ProfileInfoPropsType) => {
-    console.log(props)
-    if (!props.profile) {
+export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateStatus}) => {
+    if (!profile) {
         return <Preloader/>
     }
     return (
         <div>
-            {/*<div>*/}
-            {/*    <img*/}
-            {/*        src="https://images.ctfassets.net/hrltx12pl8hq/7yQR5uJhwEkRfjwMFJ7bUK/dc52a0913e8ff8b5c276177890eb0129/offset_comp_772626-opt.jpg?fit=fill&w=800&h=300"/>*/}
-            {/*</div>*/}
             <div className={s.descriptionBlock}>
-                <img src={props.profile.photos.large}/>
-                <ProfileStatusWithHooks status={'Hello my friends'} updateStatus={props.updateStatus}/>
+                <img src={profile.photos.large} alt={'profile photo'}/>
+                <ProfileStatusWithHooks status={'Hello my friends'} updateStatus={updateStatus}/>
                 <div>
-                    {props.profile.aboutMe}
+                    {profile.aboutMe}
                 </div>
 
 

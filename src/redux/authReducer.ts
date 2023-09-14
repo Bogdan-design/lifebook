@@ -2,7 +2,7 @@ import {AppThunk} from "./redaxStore";
 import {authAPI, LoginType} from "../api/api";
 import {stopSubmit} from "redux-form";
 
-const SET_USER_DATA = 'SET-USER-DATA'
+const SET_USER_DATA = 'samurai-network/auth/SET-USER-DATA'
 
 export type InitialStateType = {
     userId: number | null
@@ -51,35 +51,30 @@ export const setAuthUserData = (userId: number | null,
     } as const
 }
 
-export const getAuthUserData = (): AppThunk => (dispatch) => {
-    return authAPI.me()
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                let {userId, email, login} = res.data.data
-                dispatch(setAuthUserData(userId, email, login, true))
-            }
-        })
+export const getAuthUserData = (): AppThunk => async (dispatch) => {
+    const res = await authAPI.me()
+    if (res.data.resultCode === 0) {
+        let {userId, email, login} = res.data.data
+        dispatch(setAuthUserData(userId, email, login, true))
+    }
 }
 
-export const loginTC = (data: LoginType): AppThunk => (dispatch) => {
+export const loginTC = (data: LoginType): AppThunk => async (dispatch) => {
 
 
-    authAPI.login(data)
-        .then(res => {
-            if (res.data.resultCode === 0) {
-                dispatch(getAuthUserData())
-            } else {
-                const message = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
-                dispatch(stopSubmit('login', {_error: message}))
-            }
-        })
+    const res = await authAPI.login(data)
+    if (res.data.resultCode === 0) {
+        dispatch(getAuthUserData())
+    } else {
+        const message = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
+        dispatch(stopSubmit('login', {_error: message}))
+    }
+
 }
 
-export const logOutTC = (): AppThunk => (dispatch) => {
-    authAPI.logOut()
-        .then(res => {
+export const logOutTC = (): AppThunk => async (dispatch) => {
+    const res = await authAPI.logOut()
             if (res.data.resultCode === 0) {
                 dispatch(setAuthUserData(null, null, null, false))
             }
-        })
 }

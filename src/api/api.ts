@@ -1,5 +1,6 @@
 import axios from "axios";
 import {InitialStateType} from "../redux/authReducer";
+import {ProfileContainerType} from "../components/Profile/ProfileContainer";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -29,7 +30,7 @@ export const usersAPI = {
 }
 export const profileAPI = {
     getProfile(userId: number) {
-        return instance.put(`profile/${userId}`)
+        return instance.get<ProfileContainerType>(`profile/${userId}`)
         // .then(res=>res.data)
     },
     getStatus(userId: number) {
