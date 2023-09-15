@@ -1,12 +1,11 @@
 import React from "react";
-import {create} from "react-test-renderer";
+import {create, ReactTestInstance} from "react-test-renderer";
 import {ProfileStatus} from "./ProfileStatus";
 
 describe('profileStatus component', () => {
     test('status from props shout be in the state', () => {
         const component = create(<ProfileStatus status='it-kamasutra' updateStatus={()=>{}}/>)
         const instance = component.getInstance()
-//ts-ignore
         expect(instance?.state.status).toBe('it-kamasutra')
     })
     test('after creation <span> should be displayed with status', () => {
