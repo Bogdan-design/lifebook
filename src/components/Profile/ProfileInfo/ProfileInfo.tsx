@@ -3,6 +3,7 @@ import s from "./ProfileInfo.module.css"
 import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileContainerType} from "../ProfileContainer";
 import {ProfileStatus} from "./ProfileStatus";
+import usersPhoto from "../../../assets/imeges/avatar.jpg";
 
 type ProfileInfoPropsType = {
     profile: ProfileContainerType | null
@@ -18,7 +19,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, up
     return (
         <div>
             <div className={s.descriptionBlock}>
-                <img src={profile.photos.large} alt={'profile photo'}/>
+                <img src={profile.photos.large || usersPhoto} alt={'profile photo'} className={s.mainPhoto}/>
                 <ProfileStatus status={status} updateStatus={updateStatus}/>
                 <div>
                     {profile.aboutMe}

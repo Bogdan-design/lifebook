@@ -29,7 +29,7 @@ export type ProfileContainerType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string,
     fullName: string
-    userId: number | null
+    id: number | null
     photos: PhotosType
 }
 type PathParamsType = {
@@ -50,22 +50,27 @@ type PropsType = RouteComponentProps<PathParamsType> & OwnPropsType
 
 
 class ProfileContainer extends React.Component<PropsType, OwnPropsType> {
-
-
-    componentDidMount() {
+    refreshProfile = () => {
         let userId = Number(this.props.match.params.userId)
-        console.log(this.props.match.params.userId)
-        if (!userId && this.props.authorizedUserId ) {
+        if (!userId && this.props.authorizedUserId) {
             userId = this.props.authorizedUserId
-            if(!userId){
+            if (!userId) {
                 this.props.history.push('/login')
             }
         }
         this.props.getUserProfile(userId)
-
         this.props.getStatus(userId)
+    }
 
 
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps:Readonly<PropsType>) {
+        if(this.props.match.params.userId !== prevProps.match.params.userId ) {
+            this.refreshProfile()
+        }
     }
 
     render() {

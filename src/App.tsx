@@ -1,7 +1,7 @@
-import React, {Suspense} from 'react';
+import React from 'react';
 import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
-import {BrowserRouter, Route, withRouter} from "react-router-dom";
+import {HashRouter, Route, withRouter} from "react-router-dom";
 import {Sidebar} from "./components/Sidebar/Sidebar";
 import UsersContainer from "./components/Users/UsersContainer";
 
@@ -62,12 +62,12 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
 
 const AppContainer = compose<React.ComponentType>(connect(mapStateToProps, {initializeTC}), withRouter)(App)
 
-const MainApp = (props: any) => {
-    return <BrowserRouter>
+const MainApp = () => {
+    return <HashRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </BrowserRouter>
+    </HashRouter>
 }
 
 export default MainApp

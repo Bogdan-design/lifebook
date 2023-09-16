@@ -3,7 +3,6 @@ import styles from "./User.module.css";
 import usersPhoto from "../../assets/imeges/avatar.jpg";
 import {NavLink} from "react-router-dom";
 import {UsersFromServerType} from "../../api/api";
-import {Paginator} from "../../components/common/Paginator/Paginator";
 
 type UsersPropsType = {
     followingInProgress: number[]
