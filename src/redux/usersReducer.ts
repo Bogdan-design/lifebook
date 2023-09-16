@@ -1,7 +1,6 @@
 import {usersAPI, UsersFromServerType} from "../api/api";
 import {AppThunk} from "./redaxStore";
 import {Dispatch} from "redux";
-import {updateObjectInArray} from "../utils/odjectsHelper";
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -25,18 +24,16 @@ export const usersReducer = (state: InitialStateType = initialState, action: Use
         case FOLLOW:
             return {
                 ...state,
-               ussers: updateObjectInArray(state.users,action.payload.id,'id', {followed: false})
-                // users: state.users.map(el => el.id === action.payload.id
-                //     ? {...el, followed: false}
-                //     : el)
+                users: state.users.map(el => el.id === action.payload.id
+                    ? {...el, followed: false}
+                    : el)
             }
         case UNFOLLOW:
             return {
                 ...state,
-                ussers: updateObjectInArray(state.users,action.payload.id,'id', {followed: true})
-                // users: state.users.map(el => el.id === action.payload.id
-                //     ? {...el, followed: true}
-                //     : el)
+                users: state.users.map(el => el.id === action.payload.id
+                    ? {...el, followed: true}
+                    : el)
             }
         case SET_USERS:
             return {
@@ -143,11 +140,11 @@ const followUnfollow =async (dispatch:Dispatch,id:number,apiMethod:any,actionCre
 }
 
 export const follow = (id: number): AppThunk => async (dispatch) => {
-    followUnfollow(dispatch,id,usersAPI.followAPI.bind(id),unfollowSuccess)
+   return followUnfollow(dispatch,id,usersAPI.followAPI.bind(id),unfollowSuccess)
 }
 
 export const unfollow = (id: number): AppThunk => async (dispatch) => {
-    followUnfollow(dispatch,id,usersAPI.unfollowAPI.bind(id),followSuccess)
+    return followUnfollow(dispatch,id,usersAPI.unfollowAPI.bind(id),followSuccess)
 }
 
 

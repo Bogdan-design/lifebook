@@ -5,7 +5,7 @@ import {stopSubmit} from "redux-form";
 const SET_USER_DATA = 'samurai-network/auth/SET-USER-DATA'
 
 export type InitialStateType = {
-    userId: number | null
+    id: number | null
     email: string | null
     login: string | null
     isAuth: boolean
@@ -13,7 +13,7 @@ export type InitialStateType = {
 }
 
 const initialState: InitialStateType = {
-    userId: null,
+    id: null,
     email: 'blabla@bla.bla',
     login: 'samurai',
     isAuth: false
@@ -25,6 +25,7 @@ export const authReducer = (state: InitialStateType = initialState, action: User
         case SET_USER_DATA:
             return {
                 ...state,
+
                 ...action.payload
             }
 
@@ -54,14 +55,13 @@ export const setAuthUserData = (userId: number | null,
 export const getAuthUserData = (): AppThunk => async (dispatch) => {
     const res = await authAPI.me()
     if (res.data.resultCode === 0) {
-        let {userId, email, login} = res.data.data
+        let { email,id:userId, login} = res.data.data
+        debugger
         dispatch(setAuthUserData(userId, email, login, true))
     }
 }
 
 export const loginTC = (data: LoginType): AppThunk => async (dispatch) => {
-
-
     const res = await authAPI.login(data)
     if (res.data.resultCode === 0) {
         dispatch(getAuthUserData())

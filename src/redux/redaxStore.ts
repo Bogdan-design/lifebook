@@ -38,6 +38,12 @@ export type AppDispatch = ThunkDispatch<AppStateType, unknown, AnyAction>
 // types
 export type AppStateType =ReturnType<typeof reducer>
 
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+
 
 
 // @ts-ignore

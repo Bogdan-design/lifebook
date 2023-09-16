@@ -86,13 +86,12 @@ export const setStatus = (status: string) => {
 }
 
 export const getUserProfile = (userId: number) : AppThunk =>async (dispatch) =>{
-
     const res = await usersAPI.getProfile(userId)
             dispatch(setUserProfile(res.data))
 
 }
 export const getStatus = (userId: number) : AppThunk => async (dispatch) =>{
-   const res = await profileAPI.getStatus(+userId)
+   const res = await profileAPI.getStatus(userId)
             dispatch(setStatus(res.data))
 }
 

@@ -2,7 +2,7 @@ import React from "react";
 import s from "./ProfileInfo.module.css"
 import {Preloader} from "../../common/Preloader/Preloader";
 import {ProfileContainerType} from "../ProfileContainer";
-import {ProfileStatusWithHooks} from "../../../components/Profile/ProfileInfo/ProfileStatusWithHooks";
+import {ProfileStatus} from "./ProfileStatus";
 
 type ProfileInfoPropsType = {
     profile: ProfileContainerType | null
@@ -19,12 +19,10 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, up
         <div>
             <div className={s.descriptionBlock}>
                 <img src={profile.photos.large} alt={'profile photo'}/>
-                <ProfileStatusWithHooks status={'Hello my friends'} updateStatus={updateStatus}/>
+                <ProfileStatus status={status} updateStatus={updateStatus}/>
                 <div>
                     {profile.aboutMe}
                 </div>
-
-
                 ava+description
             </div>
         </div>

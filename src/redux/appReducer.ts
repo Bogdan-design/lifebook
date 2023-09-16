@@ -40,7 +40,6 @@ export const initializeTC = () => (dispatch:AppDispatch) => {
     const promise=dispatch(getAuthUserData())
     Promise.all([promise])
         .then(() => {
-
             dispatch(isInitializedSuccess())
         })
 
