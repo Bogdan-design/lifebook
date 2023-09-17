@@ -1,5 +1,5 @@
 import {AppThunk} from "./redaxStore";
-import {profileAPI, usersAPI} from "../api/api";
+import {profileAPI, UserPhotosType, usersAPI} from "../api/api";
 import {ProfileContainerType} from "../components/Profile/ProfileContainer";
 
 export type PostsType = {
@@ -18,6 +18,7 @@ const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_STATUS = 'SET-STATUS'
 const DELETE_POST = 'DELETE-POST'
+const SET_PHOTO = 'SET-PHOTO'
 
 const initialState: InitialStateType = {
     posts: [
@@ -26,6 +27,8 @@ const initialState: InitialStateType = {
     ],
     profile: null,
     status:'Yo'
+    
+
 }
 
 
@@ -49,6 +52,9 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
         case SET_STATUS: {
             return {...state, status: action.status}
         }
+        case SET_PHOTO: {
+            return {...state, profile:{...state.profile,photos:action.photos}}
+        }
         default :
             return state
     }
@@ -58,6 +64,7 @@ export type ProfileReducerACType = ReturnType<typeof addPostAC>
     | ReturnType<typeof setUserProfile>
 | ReturnType<typeof setStatus>
 | ReturnType<typeof deletePost>
+| ReturnType<typeof savePhotoSuccess>
 
 
 export const addPostAC = (newPost: string) => {
@@ -84,6 +91,12 @@ export const setStatus = (status: string) => {
         status
     } as const
 }
+export const savePhotoSuccess = (photos: UserPhotosType) => {
+    return {
+        type: SET_PHOTO,
+        photos
+    } as const
+}
 
 export const getUserProfile = (userId: number) : AppThunk =>async (dispatch) =>{
     const res = await usersAPI.getProfile(userId)
@@ -96,8 +109,17 @@ export const getStatus = (userId: number) : AppThunk => async (dispatch) =>{
 }
 
 export const updateStatus = (status:string) : AppThunk =>async (dispatch) =>{
-  const res=await  profileAPI.updateStatus(status)
+  const res= await profileAPI.updateStatus(status)
             if(res.data.resultCode===0){
             dispatch(setStatus(status))
             }
+}
+
+export const savePhoto = (newPhoto:File) : AppThunk =>async (dispatch) =>{
+    debugger
+    const res= await profileAPI.putPhoto(newPhoto)
+    if(res.data.resultCode===0){
+        debugger
+        dispatch(savePhotoSuccess(res.data.data.photos))
+    }
 }

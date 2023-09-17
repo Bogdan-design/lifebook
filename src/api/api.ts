@@ -38,6 +38,17 @@ export const profileAPI = {
     },
     updateStatus(status: string) {
         return instance.put<FollowResponseType>(`profile/status`, {status})
+    },
+    putPhoto(newPhoto: File) {
+        debugger
+        const formData= new FormData()
+        formData.append('image',newPhoto)
+        debugger
+        return  instance.put<FollowResponseType<UserPhotosType>>(`profile/photo`,formData,{
+            headers:{
+                "Content-Type":"multipart/form-data"
+            }
+        })
     }
 }
 
@@ -58,7 +69,7 @@ export const authAPI = {
 }
 
 // type
-type UserPhotosType = {
+export type UserPhotosType = {
     small: string
     large: string
 }

@@ -4,18 +4,25 @@ import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 import {ProfileContainerType} from "../../components/Profile/ProfileContainer";
 
 type ProfilePropsType ={
+    isOwner:boolean
     profile: ProfileContainerType | null
     status: string
     updateStatus: (status:string)=>void
+    savePhoto: (newPhoto: File) => void
 }
 
 
-export const Profile = (props:ProfilePropsType) => {
+export const Profile: React.FC<ProfilePropsType> = ({isOwner,profile,updateStatus,status,savePhoto}) => {
 
 
     return (
         <div>
-            <ProfileInfo profile={props.profile} status={props.status} updateStatus={props.updateStatus} />
+            <ProfileInfo isOwner={isOwner}
+                         profile={profile}
+                         status={status}
+                         updateStatus={updateStatus}
+                         savePhoto={savePhoto}
+            />
             <MyPostsContainer  />
         </div>
     )
