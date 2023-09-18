@@ -1,6 +1,6 @@
 import axios from "axios";
 import {InitialStateType} from "../redux/authReducer";
-import {ProfileContainerType} from "../components/Profile/ProfileContainer";
+import {ContactsType, ProfileContainerType} from "../components/Profile/ProfileContainer";
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -40,15 +40,16 @@ export const profileAPI = {
         return instance.put<FollowResponseType>(`profile/status`, {status})
     },
     putPhoto(newPhoto: File) {
-        debugger
         const formData= new FormData()
         formData.append('image',newPhoto)
-        debugger
-        return  instance.put<FollowResponseType<UserPhotosType>>(`profile/photo`,formData,{
+        return  instance.put<FollowResponseType<Data>>(`profile/photo`,formData,{
             headers:{
                 "Content-Type":"multipart/form-data"
             }
         })
+    },
+    putProfile(profile:RequestProfileType){
+        return instance.put<FollowResponseType>('profile',profile)
     }
 }
 
@@ -92,9 +93,22 @@ type FollowResponseType<D = {}> = {
     data: D
 }
 
+export type Data = {
+    photos: UserPhotosType;
+}
+
+
 export type LoginType = {
     email: string
     password: string
     rememberMe?: boolean
 }
 
+export type RequestProfileType = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: ContactsType
+
+}

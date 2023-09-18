@@ -2,6 +2,7 @@ import React from "react";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
 import {ProfileContainerType} from "../../components/Profile/ProfileContainer";
+import {FormType} from "../../components/Profile/ProfileInfo/ProfileDataForm";
 
 type ProfilePropsType ={
     isOwner:boolean
@@ -9,10 +10,11 @@ type ProfilePropsType ={
     status: string
     updateStatus: (status:string)=>void
     savePhoto: (newPhoto: File) => void
+    saveProfile:(data: FormType) => void
 }
 
 
-export const Profile: React.FC<ProfilePropsType> = ({isOwner,profile,updateStatus,status,savePhoto}) => {
+export const Profile: React.FC<ProfilePropsType> = ({isOwner,profile,updateStatus,status,savePhoto,saveProfile}) => {
 
 
     return (
@@ -22,6 +24,7 @@ export const Profile: React.FC<ProfilePropsType> = ({isOwner,profile,updateStatu
                          status={status}
                          updateStatus={updateStatus}
                          savePhoto={savePhoto}
+                         saveProfile={saveProfile}
             />
             <MyPostsContainer  />
         </div>
