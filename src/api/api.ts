@@ -23,13 +23,13 @@ export const usersAPI = {
         return instance.delete<FollowResponseType>(`follow/${id}`)
             .then(res => res.data)
     },
-    getProfile(userId: number) {
+    getProfile(userId: number | null) {
         console.warn('Obsolete method. Please use profileAPI object.')
         return profileAPI.getProfile(userId)
     },
 }
 export const profileAPI = {
-    getProfile(userId: number) {
+    getProfile(userId: number | null) {
         return instance.get<ProfileContainerType>(`profile/${userId}`)
         // .then(res=>res.data)
     },

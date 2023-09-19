@@ -24,23 +24,23 @@ export type ContactsType = {
 }
 
 export type ProfileContainerType = {
-    aboutMe?: string | undefined
-    contacts?: ContactsType
-    lookingForAJob?: boolean
-    lookingForAJobDescription?: string,
-    fullName?: string
-    id?: number | null
+    aboutMe: string
+    contacts: ContactsType
+    lookingForAJob: boolean
+    lookingForAJobDescription: string,
+    fullName: string
+    id: number
     photos: UserPhotosType
 }
 type PathParamsType = {
     userId: string
 }
 type MapDispatchPropsType = {
-    getUserProfile: (id: number) => void
+    getUserProfile: (id: number | null) => void
     getStatus: (id: number) => void
     updateStatus: (status: string) => void
     savePhoto: (newPhoto: File | null) => void
-    saveProfile:(data: FormType) => void
+    saveProfile:(data: FormType) => Promise<{code: number}>
 }
 type MapStatePropsType = {
     profile: ProfileContainerType | null,
@@ -97,7 +97,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 })
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus,savePhoto,saveProfile}),
+    connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, savePhoto, saveProfile}),
     withAuthRedirect,
     withRouter,
 )(ProfileContainer)

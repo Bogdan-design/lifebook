@@ -13,11 +13,11 @@ type ProfileInfoPropsType = {
     status: string
     updateStatus: (status: string) => void
     savePhoto: (newPhoto: File) => void
-    saveProfile:(data: FormType) => void
+    saveProfile:(data: FormType) => Promise<{code: number}>
 }
 
 
-export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateStatus, isOwner, savePhoto,saveProfile}) => {
+export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateStatus, isOwner, savePhoto, saveProfile}) => {
 
     const [editMode, setEditMode] = useState<boolean>(false)
 
@@ -33,16 +33,23 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, up
     }
 
     const onSubmit = (formData: FormType) => {
-        saveProfile(formData)
+
+        saveProfile(formData).then(res => {
+            if(res.code === 0) {
+                setEditMode(false)
+            }
+        })
     }
+
+    const openForm = () => setEditMode(true);
 
     return (
         <div>
             <div className={s.descriptionBlock}>
                 <img src={profile.photos.large || usersPhoto} alt={'profile photo'} className={s.mainPhoto}/>
                 {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
-                {editMode ? <ProfileDataReduxForm profile={profile} onSubmit={onSubmit}/> :
-                    <ProfileData profile={profile} isOwner goToEditMode={() => setEditMode(true)}/>}
+                {editMode ? <ProfileDataReduxForm initialValues={profile} profile={profile} onSubmit={onSubmit}/> :
+                    <ProfileData profile={profile} isOwner goToEditMode={openForm}/>}
                 <ProfileStatus status={status} updateStatus={updateStatus}/>
             </div>
         </div>

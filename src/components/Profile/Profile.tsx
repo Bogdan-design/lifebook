@@ -10,7 +10,7 @@ type ProfilePropsType ={
     status: string
     updateStatus: (status:string)=>void
     savePhoto: (newPhoto: File) => void
-    saveProfile:(data: FormType) => void
+    saveProfile:(data: FormType) => Promise<{code: number}>
 }
 
 

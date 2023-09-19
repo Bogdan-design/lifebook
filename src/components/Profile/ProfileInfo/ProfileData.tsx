@@ -19,9 +19,6 @@ export const ProfileData = (props:{profile: ProfileContainerType,isOwner:boolean
             <b>About me:</b>{profile.aboutMe}
         </div>
         <div>
-            <b>About me:</b>{profile.aboutMe}
-        </div>
-        <div>
             <b>Contacts:</b>{Object.keys(profile.contacts).map(key => {
             return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
         })}
