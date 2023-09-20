@@ -40,16 +40,16 @@ export const profileAPI = {
         return instance.put<FollowResponseType>(`profile/status`, {status})
     },
     putPhoto(newPhoto: File) {
-        const formData= new FormData()
-        formData.append('image',newPhoto)
-        return  instance.put<FollowResponseType<Data>>(`profile/photo`,formData,{
-            headers:{
-                "Content-Type":"multipart/form-data"
+        const formData = new FormData()
+        formData.append('image', newPhoto)
+        return instance.put<FollowResponseType<Data>>(`profile/photo`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
             }
         })
     },
-    putProfile(profile:RequestProfileType){
-        return instance.put<FollowResponseType>('profile',profile)
+    putProfile(profile: RequestProfileType) {
+        return instance.put<FollowResponseType>('profile', profile)
     }
 }
 
@@ -57,11 +57,12 @@ export const authAPI = {
     me() {
         return instance.get<FollowResponseType<InitialStateType>>(`auth/me`)
     },
-    login({password, rememberMe = false, email}: LoginType) {
+    login({password, rememberMe = false, email, captcha = null}: LoginType) {
         return instance.post<FollowResponseType<{ userId: number }>>('auth/login', {
             password,
             rememberMe,
-            email
+            email,
+            captcha
         })
     },
     logOut() {
@@ -69,7 +70,17 @@ export const authAPI = {
     }
 }
 
+export const securityAPI = {
+    getCaptchaUrl() {
+        return instance.get<ResponseCaptchaType>(`security/get-captcha-url`)
+    },
+}
+
 // type
+export type ResponseCaptchaType = {
+    url: string
+}
+
 export type UserPhotosType = {
     small: string
     large: string
@@ -102,6 +113,7 @@ export type LoginType = {
     email: string
     password: string
     rememberMe?: boolean
+    captcha?: string | null
 }
 
 export type RequestProfileType = {

@@ -5,11 +5,13 @@ const SET_IS_INITIALIZED = 'SET-IS-INITIALIZED'
 
 export type InitialStateType = {
     isInitialized: boolean
+    globalError:string | null
 
 }
 
 const initialState: InitialStateType = {
-    isInitialized: false
+    isInitialized: false,
+    globalError: null
 }
 
 

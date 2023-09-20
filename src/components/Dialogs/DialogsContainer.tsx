@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../redux/redaxStore";
 import {compose, Dispatch} from "redux";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {withRouter} from "react-router-dom";
 
 type MapStatePropsType = {
     dialogsPage: InitialStateType
@@ -30,6 +31,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, mapDispatchToProps),
+    withRouter,
     withAuthRedirect
 )(Dialogs)
 

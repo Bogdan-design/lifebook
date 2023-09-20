@@ -1,10 +1,9 @@
 import React from 'react';
 import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
-import {HashRouter, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, withRouter} from "react-router-dom";
 import {Sidebar} from "./components/Sidebar/Sidebar";
 import UsersContainer from "./components/Users/UsersContainer";
-
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import {connect, Provider} from "react-redux";
@@ -27,8 +26,18 @@ type MapStateToPropsType = {
 }
 
 export class App extends React.Component<AppPropsType & MapStateToPropsType, AppPropsType> {
+
+    catchAllUnhandledErrors = (promise:any) =>{
+        alert('Some error occurred')
+        // console.error(promiseRejectionEvent)
+    }
+
     componentDidMount() {
         this.props.initializeTC()
+        window.addEventListener('unhandledrejection',this.catchAllUnhandledErrors)
+    }
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection',this.catchAllUnhandledErrors)
     }
 
     render() {
@@ -40,6 +49,7 @@ export class App extends React.Component<AppPropsType & MapStateToPropsType, App
                 <HeaderContainer/>
                 <Navbar/>
                 <div className="app-wrapper-content">
+                    <Redirect exact from="/" to="/profile" />
                     <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}/>
                     <Route path="/dialogs" render={withSuspense(DialogsContainer)}/>
                     <Route path="/sitebar" render={() =>
@@ -48,6 +58,8 @@ export class App extends React.Component<AppPropsType & MapStateToPropsType, App
                         <UsersContainer/>}/>
                     <Route path="/login" render={() =>
                         <Login/>}/>
+                    <Route path='*' render={() =>
+                        <div>404 PAGE NOT FOUND</div>}/>
                 </div>
             </div>
         )
@@ -63,11 +75,11 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
 const AppContainer = compose<React.ComponentType>(connect(mapStateToProps, {initializeTC}), withRouter)(App)
 
 const MainApp = () => {
-    return <HashRouter>
+    return <BrowserRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </HashRouter>
+    </BrowserRouter>
 }
 
 export default MainApp

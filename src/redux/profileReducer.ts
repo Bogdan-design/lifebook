@@ -52,7 +52,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: P
         }
         case SET_PHOTO: {
 
-            if(state.profile) {
+            if (state.profile) {
 
                 return {...state, profile: {...state.profile, photos: action.photos}}
             }
@@ -68,7 +68,6 @@ export type ProfileReducerACType = ReturnType<typeof addPostAC>
     | ReturnType<typeof setStatus>
     | ReturnType<typeof deletePost>
     | ReturnType<typeof savePhotoSuccess>
-
 
 
 export const addPostAC = (newPost: string) => {
@@ -112,9 +111,13 @@ export const getStatus = (userId: number): AppThunk => async (dispatch) => {
     dispatch(setStatus(res.data))
 }
 export const updateStatus = (status: string): AppThunk => async (dispatch) => {
-    const res = await profileAPI.updateStatus(status)
-    if (res.data.resultCode === 0) {
-        dispatch(setStatus(status))
+    try {
+        const res = await profileAPI.updateStatus(status)
+        if (res.data.resultCode === 0) {
+            dispatch(setStatus(status))
+        }
+    } catch (error) {
+        alert('Some error')
     }
 }
 export const savePhoto = (newPhoto: File): AppThunk => async (dispatch) => {
@@ -124,7 +127,7 @@ export const savePhoto = (newPhoto: File): AppThunk => async (dispatch) => {
     }
 }
 
-export const saveProfile = (profile: RequestProfileType): AppThunk => async (dispatch,getState) => {
+export const saveProfile = (profile: RequestProfileType): AppThunk => async (dispatch, getState) => {
     debugger
     const userId = getState().auth.id
     const res = await profileAPI.putProfile(profile)
@@ -136,7 +139,7 @@ export const saveProfile = (profile: RequestProfileType): AppThunk => async (dis
     } else {
         debugger
         const message = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
-        dispatch(stopSubmit('editProfile',{_error:message}))
+        dispatch(stopSubmit('editProfile', {_error: message}))
         return Promise.reject(message)
     }
     return {code: res.data.resultCode}

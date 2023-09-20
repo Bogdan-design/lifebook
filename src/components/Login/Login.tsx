@@ -12,6 +12,12 @@ import s from '../common/FormsControls/FormsControls.module.css'
 type LoginPropsType = {
     loginTC: (data: LoginType) => void
     isAuth: boolean
+    captcha:string | null
+}
+
+type MapStateToProps = {
+    captcha: string | null
+    isAuth: boolean
 }
 
 const Login = (props: LoginPropsType) => {
@@ -29,7 +35,7 @@ const Login = (props: LoginPropsType) => {
             <h1>
                 LOGIN
             </h1>
-            <LoginReduxForm onSubmit={onSubmit}/>
+            <LoginReduxForm onSubmit={onSubmit} captcha={props.captcha}/>
         </div>
     );
 };
@@ -37,7 +43,8 @@ const Login = (props: LoginPropsType) => {
 
 const maxLength = maxLengthCreator(20)
 
-export const LoginForm: React.FC<InjectedFormProps<LoginType>> = ({handleSubmit,error}) => {
+export const LoginForm: React.FC<InjectedFormProps<LoginType,{captcha:string | null}> & {captcha:string | null}>
+    = ({handleSubmit,error,captcha}) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
@@ -51,6 +58,8 @@ export const LoginForm: React.FC<InjectedFormProps<LoginType>> = ({handleSubmit,
             <div>
                 <Field as='input' type={"checkbox"} text={'remember me'} name={'rememberMe'} component={Element}/>
             </div>
+            {captcha && <img src={captcha} alt={'captcha'}/>}
+            {captcha && <Field placeholder={'Symbols from image'} as='input' name={'captcha'} validate={[required]} component={Element}/>}
             {error && <div className={s.formSummeryError}>{error}</div>}
             <div>
                 <button type={'submit'}>Login</button>
@@ -59,11 +68,12 @@ export const LoginForm: React.FC<InjectedFormProps<LoginType>> = ({handleSubmit,
     );
 };
 
-const LoginReduxForm = reduxForm<LoginType>({
+const LoginReduxForm = reduxForm<LoginType,{captcha:string | null}>({
     form: 'login'
 })(LoginForm)
 
-let mapStateToProps = (state: AppStateType) => ({
+let mapStateToProps = (state: AppStateType) : MapStateToProps => ({
+    captcha: state.auth.captcha,
     isAuth: state.auth.isAuth
 })
 
