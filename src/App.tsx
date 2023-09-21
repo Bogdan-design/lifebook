@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import {Navbar} from "./components/Navbar/Navbar";
-import {BrowserRouter, Redirect, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
 import {Sidebar} from "./components/Sidebar/Sidebar";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -49,17 +49,19 @@ export class App extends React.Component<AppPropsType & MapStateToPropsType, App
                 <HeaderContainer/>
                 <Navbar/>
                 <div className="app-wrapper-content">
-                    <Redirect exact from="/" to="/profile" />
-                    <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}/>
-                    <Route path="/dialogs" render={withSuspense(DialogsContainer)}/>
-                    <Route path="/sitebar" render={() =>
-                        <Sidebar/>}/>
-                    <Route path="/users" render={() =>
-                        <UsersContainer/>}/>
-                    <Route path="/login" render={() =>
-                        <Login/>}/>
-                    <Route path='*' render={() =>
-                        <div>404 PAGE NOT FOUND</div>}/>
+                    <Switch>
+                    <Redirect exact from="/" to="/profile"/>
+                        <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}/>
+                        <Route path="/dialogs" render={withSuspense(DialogsContainer)}/>
+                        <Route path="/sitebar" render={() =>
+                            <Sidebar/>}/>
+                        <Route path="/users" render={() =>
+                            <UsersContainer/>}/>
+                        <Route path="/login" render={() =>
+                            <Login/>}/>
+                        <Route path='*' render={() =>
+                            <div>404 PAGE NOT FOUND</div>}/>
+                    </Switch>
                 </div>
             </div>
         )
