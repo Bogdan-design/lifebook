@@ -60,7 +60,7 @@ export class App extends React.Component<AppPropsType & MapStateToPropsType, App
                         <Route path="/login" render={() =>
                             <Login/>}/>
                         <Route path='*' render={() =>
-                            <div>404 PAGE NOT FOUND</div>}/>
+                            <div style={{textAlign:'center',fontWeight:'bold',fontSize:'25px',marginTop:'8%'}}>404 PAGE NOT FOUND</div>}/>
                     </Switch>
                 </div>
             </div>

@@ -22,7 +22,7 @@ export const User: React.FC<UsersPropsType> = ({
                 <span><div>
                             <NavLink to={'/profile/' + user.id}>
                                 <img
-                                    alt={'Users photo'}
+                                    alt='photo'
                                     src={user.photos.small !== null ? user.photos.small : usersPhoto}
                                     className={styles.userPhoto}
                                 />

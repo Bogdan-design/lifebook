@@ -21,6 +21,7 @@ import {
     getTotalUsersCount,
     getUsers
 } from "../../redux/usersSelectors";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 type MapStatePropsType = InitialStateType
 type UsersAPIComponentPropsType = {
@@ -41,7 +42,7 @@ type UsersAPIComponentPropsType = {
 }
 
 
-class UsersContainer extends React.Component<UsersAPIComponentPropsType, InitialStateType> {
+class UsersContainer extends React.Component<UsersAPIComponentPropsType, MapStatePropsType> {
     componentDidMount() {
         const {currentPage,pageSize,requestUsers} = this.props
         requestUsers(currentPage,pageSize)
@@ -76,12 +77,13 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
-        followingInProgress: getFollowingInProgress(state)
+        followingInProgress: getFollowingInProgress(state),
     }
 }
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {follow, unfollow, setCurrentPage, toggleFollowingInProgress, requestUsers}),
+    withAuthRedirect
 )(UsersContainer)
 
 
