@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {AppStateType} from "../../redux/redaxStore";
+import {AppStateType} from "redux/redaxStore";
 import {
     follow,
     InitialStateType,
@@ -8,10 +8,10 @@ import {
     setCurrentPage,
     toggleFollowingInProgress,
     unfollow,
-} from "../../redux/usersReducer";
+} from "redux/usersReducer";
 import {Users} from "./Users";
 import {Preloader} from "../common/Preloader/Preloader";
-import {UsersFromServerType} from "../../api/api";
+import {UsersFromServerType} from "api/api";
 import {compose} from "redux";
 import {
     getCurrentPage,
@@ -20,8 +20,8 @@ import {
     getPageSize,
     getTotalUsersCount,
     getUsers
-} from "../../redux/usersSelectors";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+} from "redux/usersSelectors";
+import {withAuthRedirect} from "hoc/withAuthRedirect";
 
 type MapStatePropsType = InitialStateType
 type UsersAPIComponentPropsType = {

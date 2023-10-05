@@ -1,17 +1,17 @@
 import React from 'react';
 import './App.css';
-import {Navbar} from "./components/Navbar/Navbar";
+import {Navbar} from "components/Navbar/Navbar";
 import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
-import {Sidebar} from "./components/Sidebar/Sidebar";
+import {Sidebar} from "components/Sidebar/Sidebar";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
-import {initializeTC} from "../src/redux/appReducer";
-import {AppStateType, store} from "../src/redux/redaxStore";
-import {Preloader} from "./components/common/Preloader/Preloader";
-import {withSuspense} from "./hoc/withSuspense";
+import {initializeTC} from "redux/appReducer";
+import {AppStateType, store} from "redux/redaxStore";
+import {Preloader} from "components/common/Preloader/Preloader";
+import {withSuspense} from "hoc/withSuspense";
 
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 
