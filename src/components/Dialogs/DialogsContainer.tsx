@@ -1,10 +1,10 @@
 import React from "react";
-import {addMessageAC, InitialStateType} from "../../redux/dialogsReducer";
+import {addMessageAC, InitialStateType} from "redux/dialogsReducer";
 import {Dialogs} from "./Dialogs";
 import {connect} from "react-redux";
-import {AppStateType} from "../../redux/redaxStore";
+import {AppStateType} from "redux/redaxStore";
 import {compose, Dispatch} from "redux";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {withAuthRedirect} from "hoc/withAuthRedirect";
 import {withRouter} from "react-router-dom";
 
 type MapStatePropsType = {

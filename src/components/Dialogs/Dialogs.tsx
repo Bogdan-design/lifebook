@@ -2,11 +2,10 @@ import React from "react";
 import s from "./Dialogs.module.css"
 import {DialogItem} from "./DialogItem/DialogItem";
 import {Message} from "./Message/Message";
-import {InitialStateType} from "../../redux/dialogsReducer";
-import {Redirect} from "react-router-dom";
+import {InitialStateType} from "redux/dialogsReducer";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {Element} from "../../components/common/FormsControls/FormsControls";
-import {maxLengthCreator, required} from "../../utils/validators/validators";
+import {Element} from "components/common/FormsControls/FormsControls";
+import {maxLengthCreator, required} from "utils/validators/validators";
 
 type DialogsPropsType = {
     dialogsPage:InitialStateType
