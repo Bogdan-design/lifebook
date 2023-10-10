@@ -23,7 +23,6 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, up
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length) {
-            debugger
             savePhoto(e.target.files[0])
         }
     }
@@ -47,7 +46,7 @@ export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, up
         <div>
             <div className={s.descriptionBlock}>
                 <img src={profile.photos.large || usersPhoto} alt={'profile photo'} className={s.mainPhoto}/>
-                {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
+                {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/> }
                 {editMode ? <ProfileDataReduxForm initialValues={profile} profile={profile} onSubmit={onSubmit}/> :
                     <ProfileData profile={profile} isOwner goToEditMode={openForm}/>}
                 <ProfileStatus status={status} updateStatus={updateStatus}/>
