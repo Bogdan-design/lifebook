@@ -1,13 +1,13 @@
 import React from "react";
 import {Profile} from "./Profile";
 import {connect} from "react-redux";
-import {AppStateType} from "../../redux/redaxStore";
-import {getStatus, getUserProfile, updateStatus, savePhoto, saveProfile} from "../../redux/profileReducer";
+import {AppStateType} from "redux/redaxStore";
+import {getStatus, getUserProfile, updateStatus, savePhoto, saveProfile} from "redux/profileReducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {compose} from "redux";
-import {withAuthRedirect} from "../../hoc/withAuthRedirect";
-import {UserPhotosType} from "../../api/api";
-import {FormType} from "../../components/Profile/ProfileInfo/ProfileDataForm";
+import {withAuthRedirect} from "hoc/withAuthRedirect";
+import {UserPhotosType} from "api/api";
+import {FormType} from "components/Profile/ProfileInfo/ProfileDataForm";
 
 
 export type ContactsType = {

@@ -1,5 +1,5 @@
 import {AppThunk} from "./redaxStore";
-import {authAPI, LoginType, securityAPI} from "../api/api";
+import {authAPI, LoginType, securityAPI} from "api/api";
 import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'samurai-network/auth/SET-USER-DATA'

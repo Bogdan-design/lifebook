@@ -1,6 +1,6 @@
 import React from 'react';
-import {UsersFromServerType} from "../../api/api";
-import {Paginator} from "../../components/common/Paginator/Paginator";
+import {UsersFromServerType} from "api/api";
+import {Paginator} from "components/common/Paginator/Paginator";
 import {User} from "./User";
 
 type UsersPropsType = {

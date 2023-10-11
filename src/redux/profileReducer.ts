@@ -1,6 +1,6 @@
 import {AppThunk} from "./redaxStore";
-import {profileAPI, RequestProfileType, UserPhotosType, usersAPI} from "../api/api";
-import {ProfileContainerType} from "../components/Profile/ProfileContainer";
+import {profileAPI, RequestProfileType, UserPhotosType, usersAPI} from "api/api";
+import {ProfileContainerType} from "components/Profile/ProfileContainer";
 import {stopSubmit} from "redux-form";
 
 export type PostsType = {

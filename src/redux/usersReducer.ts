@@ -1,4 +1,4 @@
-import {usersAPI, UsersFromServerType} from "../api/api";
+import {usersAPI, UsersFromServerType} from "api/api";
 import {AppThunk} from "./redaxStore";
 import {Dispatch} from "redux";
 

@@ -1,8 +1,8 @@
 import React from "react";
 import {Header} from "./Header";
 import {connect} from "react-redux";
-import {AppStateType} from "../../redux/redaxStore";
-import {logOutTC} from "../../redux/authReducer";
+import {AppStateType} from "redux/redaxStore";
+import {logOutTC} from "redux/authReducer";
 
 type DataType = {
     id: number

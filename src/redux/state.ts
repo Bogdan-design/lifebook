@@ -1,7 +1,7 @@
 import {sidebarReducer} from "./sidebarReducer";
 import {dialogsReducer} from "./dialogsReducer";
 import {profileReducer} from "./profileReducer";
-import {ProfileContainerType} from "../components/Profile/ProfileContainer";
+import {ProfileContainerType} from "components/Profile/ProfileContainer";
 
 export type StoreType = {
     _state: RooteStateType
