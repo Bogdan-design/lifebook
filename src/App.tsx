@@ -29,7 +29,6 @@ export class App extends React.Component<AppPropsType & MapStateToPropsType, App
 
     catchAllUnhandledErrors = (promise:any) =>{
         alert('Some error occurred')
-        // console.error(promiseRejectionEvent)
     }
 
     componentDidMount() {

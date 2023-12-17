@@ -1,8 +1,8 @@
 import React from "react";
 import {ProfileInfo} from "./ProfileInfo/ProfileInfo";
 import {MyPostsContainer} from "./MyPosts/MyPostsContainer";
-import {ProfileContainerType} from "../../components/Profile/ProfileContainer";
-import {FormType} from "../../components/Profile/ProfileInfo/ProfileDataForm";
+import {ProfileContainerType} from "components/Profile/ProfileContainer";
+import {FormType} from "components/Profile/ProfileInfo/ProfileDataForm";
 
 type ProfilePropsType ={
     isOwner:boolean

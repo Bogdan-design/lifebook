@@ -1,7 +1,7 @@
-import {addPostAC, InitialStateType} from "../../../redux/profileReducer";
+import {addPostAC, InitialStateType} from "redux/profileReducer";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
-import {AppStateType} from "../../../redux/redaxStore";
+import {AppStateType} from "redux/redaxStore";
 import {Dispatch} from "redux";
 
 

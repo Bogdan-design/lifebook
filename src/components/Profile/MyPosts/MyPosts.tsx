@@ -1,10 +1,10 @@
 import React from "react";
 import s from "./MyPosts.module.css"
 import {Post} from "./Posts/Post";
-import {PostsType} from "../../../redux/state";
+import {PostsType} from "redux/state";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {maxLengthCreator, required} from "../../../utils/validators/validators";
-import {Element} from "../../../components/common/FormsControls/FormsControls";
+import {maxLengthCreator, required} from "utils/validators/validators";
+import {Element} from "components/common/FormsControls/FormsControls";
 
 type MyPostsPropsType = {
     addPost: (value:string) => void

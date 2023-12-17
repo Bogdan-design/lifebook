@@ -1,12 +1,11 @@
 import React from 'react';
 import preloader from "../../../assets/imeges/preloader.gif"
 
-type PreloaderType = {}
 
-export const Preloader = (props:PreloaderType) => {
+export const Preloader = () => {
     return (
         <div>
-            <img src={preloader}/>
+            <img src={preloader} alt={''}/>
         </div>
     );
 };
