@@ -49,7 +49,7 @@ export class App extends React.Component<AppPropsType & MapStateToPropsType, App
                 <Navbar/>
                 <div className="app-wrapper-content">
                     <Switch>
-                    <Redirect exact from="/" to="/profile"/>
+                    <Redirect exact from="/lifebook" to="/profile"/>
                         <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}/>
                         <Route path="/dialogs" render={withSuspense(DialogsContainer)}/>
                         <Route path="/sitebar" render={() =>
