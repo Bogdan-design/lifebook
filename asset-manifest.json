@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/lifebook/static/css/main.945a2b47.css",
-    "main.js": "/lifebook/static/js/main.d7c0902e.js",
+    "main.js": "/lifebook/static/js/main.d5355618.js",
     "static/css/764.39000e67.chunk.css": "/lifebook/static/css/764.39000e67.chunk.css",
     "static/js/764.a8c91258.chunk.js": "/lifebook/static/js/764.a8c91258.chunk.js",
     "static/css/3.d36952c2.chunk.css": "/lifebook/static/css/3.d36952c2.chunk.css",
@@ -10,7 +10,7 @@
     "static/media/preloader.gif": "/lifebook/static/media/preloader.51bcd259f54eae05d738.gif",
     "index.html": "/lifebook/index.html",
     "main.945a2b47.css.map": "/lifebook/static/css/main.945a2b47.css.map",
-    "main.d7c0902e.js.map": "/lifebook/static/js/main.d7c0902e.js.map",
+    "main.d5355618.js.map": "/lifebook/static/js/main.d5355618.js.map",
     "764.39000e67.chunk.css.map": "/lifebook/static/css/764.39000e67.chunk.css.map",
     "764.a8c91258.chunk.js.map": "/lifebook/static/js/764.a8c91258.chunk.js.map",
     "3.d36952c2.chunk.css.map": "/lifebook/static/css/3.d36952c2.chunk.css.map",
@@ -18,6 +18,6 @@
   },
   "entrypoints": [
     "static/css/main.945a2b47.css",
-    "static/js/main.d7c0902e.js"
+    "static/js/main.d5355618.js"
   ]
 }
