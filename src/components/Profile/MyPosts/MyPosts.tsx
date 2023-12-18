@@ -5,17 +5,20 @@ import {PostsType} from "redux/state";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {maxLengthCreator, required} from "utils/validators/validators";
 import {Element} from "components/common/FormsControls/FormsControls";
+import {ProfileContainerType} from "components/Profile/ProfileContainer";
+import usersPhoto from "assets/imeges/avatar.jpg";
 
 type MyPostsPropsType = {
     addPost: (value:string) => void
     posts: PostsType[]
+    profile: ProfileContainerType | null
 
 }
 
 export const  MyPosts= React.memo((props: MyPostsPropsType) =>{
 
     const postsElements = props.posts.map((p) =>
-        <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
+        <Post avatar={props.profile?.photos.small} key={p.id} message={p.message} likesCount={p.likesCount}/>)
 
     const onAddPost = (value: PostFormType) => {
         props.addPost(value.post)

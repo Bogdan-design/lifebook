@@ -128,16 +128,16 @@ export const savePhoto = (newPhoto: File): AppThunk => async (dispatch) => {
 }
 
 export const saveProfile = (profile: RequestProfileType): AppThunk => async (dispatch, getState) => {
-    debugger
+
     const userId = getState().auth.id
     const res = await profileAPI.putProfile(profile)
-    debugger
+
     if (res.data.resultCode === 0) {
-        debugger
+
         dispatch(getUserProfile(userId))
 
     } else {
-        debugger
+
         const message = res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
         dispatch(stopSubmit('editProfile', {_error: message}))
         return Promise.reject(message)
